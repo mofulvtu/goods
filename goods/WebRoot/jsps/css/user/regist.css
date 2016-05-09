@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+
+#divMain {
+	margin-left: 240px;
+}
+
+#divTitle {
+	line-height: 30px;
+	width: 880px;
+	height: 30px;
+	border: 1px solid #d0d0d0;
+	border-bottom: hidden;
+	background: url("/goods/images/bg_btns.png") repeat-x 0px -132px;
+}
+
+#spanTitle {
+	margin-left: 18px;
+	font-weight: 900
+}
+
+#divBody {
+	width: 880px;
+	height: 400px;
+	border: 1px solid #d0d0d0;
+}
+
+.tdText {
+	width: 300px;
+	text-align: right;
+}
+
+.tdInput {
+	width: 250px;
+}
+
+.tdError {
+	width: 300px
+}
+
+#tableForm{
+	line-height: 50px;
+}
+.inputclass{
+	width: 240px;
+	height: 32px;
+	border: 1px solid #7f9db9;
+	padding-left: 10px;
+}
+#imgVerifyCode{
+	width: 100px;
+}
+#divVerifyCode{
+	text-align: center;
+	border: 1px solid #e2e2e2;
+}
+.errorclass{
+	background: url(/goods/images/error.png) no-repeat;
+	color: #f40000;
+	font: 10px; 
+	border: 1px solid #ffb8b8;
+	background-color: #fef2f2;
+	padding: 6px 8px 6px 35px;
+}
