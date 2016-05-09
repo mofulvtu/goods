@@ -18,47 +18,49 @@
 			<span id="spanTitle">新用户注册</span>
 		</div>
 		<div id="divBody">
-			<table id="tableForm">
+		  <form action='<c:url value='/UserServlet'/>' method="post" id="registForm">
+		    <input type="hidden" name="method" value="regist"/>
+			<table id="tableForm" >
 				<tr>
-					<td class="tdText">用户名:</td>
+					<td class="tdText">用户名：</td>
 					<td class="tdInput">
-					  <input class="inputclass" type="text" name="loginname" id="loginname" />
+					  <input class="inputClass" type="text" name="loginname" id="loginname" />
 					</td>
 					<td class="tdError">
-					  <label class="errorclass" id="loginnameError">用户名不能为空！</label>
+					  <label class="errorclass" id="loginnameError"></label>
 					</td>
 				</tr>
 				<tr>
-					<td class="tdText">登录密码:</td>
+					<td class="tdText">登录密码：</td>
 					<td>
-					  <input class="inputclass" type="password" name="loginpass" id="loginpass" />
+					  <input class="inputClass" type="password" name="loginpass" id="loginpass" />
 					</td>
 					<td>
-					  <label class="errorclass" id="loginpassError">密码不能为空！</label>
-					</td>
-				</tr>
-				<tr>
-					<td class="tdText">确认密码:</td>
-					<td>
-					  <input class="inputclass" type="password" name="reloginpass" id="reloginpass" />
-					</td>
-					<td>
-					  <label class="errorclass" id="reloginnameError"></label>
+					  <label class="errorclass" id="loginpassError"></label>
 					</td>
 				</tr>
 				<tr>
-					<td class="tdText">Email:</td>
+					<td class="tdText">确认密码：</td>
 					<td>
-					  <input class="inputclass" type="text" name="email" id="email" />
+					  <input class="inputClass" type="password" name="reloginpass" id="reloginpass" />
+					</td>
+					<td>
+					  <label class="errorclass" id="reloginpassError"></label>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdText">Email：</td>
+					<td>
+					  <input class="inputClass" type="text" name="email" id="email" />
 					</td>
 					<td>
 					  <label class="errorclass" id="emailError"></label>
 					</td>
 				</tr>
 				<tr>
-					<td class="tdText">验证码:</td>
+					<td class="tdText">验证码：</td>
 					<td>
-					  <input class="inputclass" type="text" name="verifyCode" id="verifyCode" />
+					  <input class="inputClass" type="text" name="verifyCode" id="verifyCode" />
 					</td>
 					<td>
 					  <label class="errorclass" id="verifyCodeError"></label>
@@ -79,6 +81,7 @@
 				</tr>
 
 			</table>
+			</form>
 		</div>
 
 	</div>
