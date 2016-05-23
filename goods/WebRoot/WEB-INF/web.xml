@@ -33,6 +33,16 @@
 	   <servlet-name>UserServlet</servlet-name>
        <url-pattern>/UserServlet</url-pattern>	
 	</servlet-mapping>
+	
+	<servlet>
+	   <servlet-name>CategoryServlet</servlet-name>
+	   <servlet-class>com.lzg.goods.category.web.servlet.CategoryServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	   <servlet-name>CategoryServlet</servlet-name>
+       <url-pattern>/CategoryServlet</url-pattern>	
+	</servlet-mapping>
 
 </web-app>
 	

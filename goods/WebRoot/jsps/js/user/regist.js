@@ -85,19 +85,35 @@ function validateLoginname(){
 	/*
 	 * 2.长度校验
 	 */
-    if(value.length<6 || value.length>20){
+    if(value.length<3 || value.length>20){
     	/*
     	 * 获取对应的label
     	 * 添加错误的信息
     	 * 显示label
     	 */
-    	$("#" + id + "Error").text("用户名长度必须在6 - 20之间！");
+    	$("#" + id + "Error").text("用户名长度必须在3 - 20之间！");
     	showError($("#" + id + "Error"));
     	return false;
     }
 	/*
 	 * 3.是否注册校验
 	 */
+    $.ajax({
+    	url:"/goods/UserServlet",//请求的Servlet
+        data:{method:"ajaxValidateLoginname",loginname:value},//给服务器的参数
+        type:"POST",
+        dataType:"json",
+        async:false,//是异步请求，如果是异步，那么不会等服务器返回，这个函数就行下运行了
+        cache:false,
+        success:function(result){
+        	if(!result){//如果校验失败
+        		$("#" + id + "Error").text("用户名已被注册！");
+        		showError($("#" + id + "Error"));
+        		return false;
+        	}
+        }
+    });
+    
     return true;
 }
 /*
@@ -122,13 +138,13 @@ function validateLoginpass(){
 	/*
 	 * 2.长度校验
 	 */
-    if(value.length<6 || value.length>20){
+    if(value.length<3 || value.length>20){
     	/*
     	 * 获取对应的label
     	 * 添加错误的信息
     	 * 显示label
     	 */
-    	$("#" + id + "Error").text("密码长度必须在6 - 20之间！");
+    	$("#" + id + "Error").text("密码长度必须在3 - 20之间！");
     	showError($("#" + id + "Error"));
     	return false;
     }
@@ -149,7 +165,7 @@ function validateReloginpass(){
 	    	 * 添加错误的信息
 	    	 * 显示label
 	    	 */
-	    	$("#" + id + "Error").text("密码不能为空！");
+	    	$("#" + id + "Error").text("确认密码不能为空！");
 	    	showError($("#" + id + "Error"));
 	    	return false;
 	    }
@@ -188,7 +204,7 @@ function validateEmail(){
 	    	return false;
 	    }
 		/*
-		 * 2.两次输入是否一致校验
+		 * 2.Email格式校验
 		 */
 	    if(!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/.test(value)){
 	    	/*
@@ -200,6 +216,24 @@ function validateEmail(){
 	    	showError($("#" + id + "Error"));
 	    	return false;
 	    }
+	    /*
+		 * 3.是否注册校验
+		 */
+	    $.ajax({
+	    	url:"/goods/UserServlet",
+	        data:{method:"ajaxValidateEmail",email:value},
+	        type:"POST",
+	        dataType:"json",
+	        async:false,
+	        cache:false,
+	        success:function(result){
+	        	if(!result){
+	        		$("#" + id + "Error").text("Email已被注册！");
+	        		showError($("#" + id + "Error"));
+	        		return false;
+	        	}
+	        }
+	    });
 	    return true;
 }
 /*
@@ -234,6 +268,24 @@ function validateVerifyCode(){
 	    	showError($("#" + id + "Error"));
 	    	return false;
 	    }
+	    /*
+		 * 3.是否正确
+		 */
+	    $.ajax({
+	    	url:"/goods/UserServlet",
+	        data:{method:"ajaxValidateVerifyCode",verifyCode:value},
+	        type:"POST",
+	        dataType:"json",
+	        async:false,
+	        cache:false,
+	        success:function(result){
+	        	if(!result){
+	        		$("#" + id + "Error").text("验证码错误！");
+	        		showError($("#" + id + "Error"));
+	        		return false;
+	        	}
+	        }
+	    });
 	    return true;
 }
 

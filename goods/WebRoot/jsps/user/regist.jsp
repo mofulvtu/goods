@@ -24,37 +24,37 @@
 				<tr>
 					<td class="tdText">用户名：</td>
 					<td class="tdInput">
-					  <input class="inputClass" type="text" name="loginname" id="loginname" />
+					  <input class="inputClass" type="text" name="loginname" id="loginname" value="${form.loginname }"/>
 					</td>
 					<td class="tdError">
-					  <label class="errorclass" id="loginnameError"></label>
+					  <label class="errorclass" id="loginnameError">${errors.loginname }</label>
 					</td>
 				</tr>
 				<tr>
 					<td class="tdText">登录密码：</td>
 					<td>
-					  <input class="inputClass" type="password" name="loginpass" id="loginpass" />
+					  <input class="inputClass" type="password" name="loginpass" id="loginpass" value="${form.loginpass }"/>
 					</td>
 					<td>
-					  <label class="errorclass" id="loginpassError"></label>
+					  <label class="errorclass" id="loginpassError">${errors.loginpass }</label>
 					</td>
 				</tr>
 				<tr>
 					<td class="tdText">确认密码：</td>
 					<td>
-					  <input class="inputClass" type="password" name="reloginpass" id="reloginpass" />
+					  <input class="inputClass" type="password" name="reloginpass" id="reloginpass" value="${form.loginpass }"/>
 					</td>
 					<td>
-					  <label class="errorclass" id="reloginpassError"></label>
+					  <label class="errorclass" id="reloginpassError">${errors.reloginpass }</label>
 					</td>
 				</tr>
 				<tr>
 					<td class="tdText">Email：</td>
 					<td>
-					  <input class="inputClass" type="text" name="email" id="email" />
+					  <input class="inputClass" type="text" name="email" id="email" value="${form.email }"/>
 					</td>
 					<td>
-					  <label class="errorclass" id="emailError"></label>
+					  <label class="errorclass" id="emailError">${errors.email }</label>
 					</td>
 				</tr>
 				<tr>
@@ -63,7 +63,7 @@
 					  <input class="inputClass" type="text" name="verifyCode" id="verifyCode" />
 					</td>
 					<td>
-					  <label class="errorclass" id="verifyCodeError"></label>
+					  <label class="errorclass" id="verifyCodeError">${errors.verifyCode }</label>
 					</td>
 				</tr>
 				<tr>
