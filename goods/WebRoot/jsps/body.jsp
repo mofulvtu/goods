@@ -25,19 +25,19 @@ a {text-decoration: none;}
   </head>
   
   <body>
-    <h1>欢迎进入传智播客网上书城系统</h1>
-    <a href="http://www.itcast.cn/" target="_top">
-      <img src="http://localhost:8080/goods/images/itcast_link.gif" border="0" style="border:1px #DCD8D7 solid;"/>
-    </a>
-    <br/>
-    <a href="http://subject.csdn.net/zhangxx/" target="_top">
-      <img src="http://localhost:8080/goods/images/mhzxxls.jpg" border="0"/>
-    </a>
+    <h1>欢迎进入集创网上书城系统</h1>
     <a href="http://www.csdn.net/" target="_top">
       <img src="http://localhost:8080/goods/images/csdn.jpg" border="0"/>
     </a>
-    <a href="http://www.itheima.com/" target="_top">
-      <img src="http://localhost:8080/goods/images/20131225111747348.jpg" border="0"/>
+    <br/>
+    <a href="http://github.com/" target="_top">
+      <img src="http://localhost:8080/goods/images/github.jpg" border="0"/>
+    </a>
+    <a href="http://www.atguigu.com/" target="_top">
+      <img src="http://localhost:8080/goods/images/shangguigu.jpg" border="0"/>
+    </a>
+    <a href="http://www.itcast.cn/" target="_top">
+      <img src="http://localhost:8080/goods/images/itcast.jpg" border="0"/>
     </a>   
   </body>
 </html>

@@ -30,9 +30,9 @@
 		 3./goods/jsps/book/list.jsp ： 点击二级分类后链接到的URL
 		 4.body: 表示链接的内容在哪个框架页中显示
 		 */
-        alert("进来了");
+       /*  alert("进来了");
 		alert("${parents}");
-		alert("${params}");
+		alert("${params}"); */
 		<c:forEach items="${parents}" var="parent">
 			<c:forEach items="${parent.children}" var="child">
 			bar.add("${parent.cname}", "${child.cname}", "/goods/jsps/book/list.jsp", "body");

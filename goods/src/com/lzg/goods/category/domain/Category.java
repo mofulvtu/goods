@@ -1,4 +1,4 @@
-package com.lzg.goods.category.domain;
+ package com.lzg.goods.category.domain;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
 public class Category {
 	private String cid;//主键
 	private String cname;//分类名称
-	private Category parent;//父分类
+	private Category parent;//父分类 对应数据库表中的pid  自身关联
 	private String desc;//分类描述
     private List<Category> children;//子分类  双向关联+自关联
 	public String getCid() {

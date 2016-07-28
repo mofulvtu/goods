@@ -60,7 +60,7 @@ public class CategoryDao {
 		 /*
 		  * 1.查询出所有一级分类
 		  */
-		 String sql = "select * from t_category where pid is null";
+		String sql = "select * from t_category where pid is null";
 		List<Map<String, Object>> mapList = queryRunner.query(sql, new MapListHandler());
 		
 		List<Category> parents = toCategoryList(mapList);

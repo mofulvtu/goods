@@ -10,7 +10,7 @@
     
 	<link rel="stylesheet" type="text/css" href="<c:url value='/jsps/css/main.css'/>">
   </head>
-  
+   
   <body>
 <table class="table" align="center">
 	<tr class="trTop">

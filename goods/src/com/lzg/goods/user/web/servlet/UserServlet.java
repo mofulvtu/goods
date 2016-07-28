@@ -41,7 +41,6 @@ public class UserServlet extends BaseServlet{
 	 */
 	public String ajaxValidateLoginname(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("123");
 		/*
 		 * 1.获取用户名
 		 */
@@ -137,6 +136,7 @@ public class UserServlet extends BaseServlet{
         /*
          * 3.使用service完成业务
          */
+        System.out.println(formUser.getEmail());
         userService.regist(formUser);
         /*
          * 4.保存成功信息，转发到msg.jsp显示！
