@@ -38,7 +38,7 @@
 			bar.add("${parent.cname}", "${child.cname}", "/goods/jsps/book/list.jsp", "body");
 			</c:forEach>
 		</c:forEach>
-		bar.add("程序设计", "JSP", "/goods/jsps/book/list.jsp", "body");
+		/* bar.add("程序设计", "JSP", "/goods/jsps/book/list.jsp", "body");
 		bar.add("程序设计", "Java Javascript", "/goods/jsps/book/list.jsp", "body");
 		bar.add("程序设计", "C C++ VC VC++", "/goods/jsps/book/list.jsp", "body");
 		
@@ -53,7 +53,7 @@
 		bar.add("操作系统/系统开发", "Windows", "/goods/jsps/book/list.jsp", "body");
 		bar.add("操作系统/系统开发", "Linux", "/goods/jsps/book/list.jsp", "body");
 		bar.add("操作系统/系统开发", "系统开发", "/goods/jsps/book/list.jsp", "body");
-
+ */
 		$("#menu").html(bar.toString());
 	});
 </script>
