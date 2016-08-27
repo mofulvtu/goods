@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * <p>Title:PageBean</p>
- * <p>Description:分页Bean，将页面展示所需的数据包装成PageBEn</p>
+ * <p>Description:分页Bean，将页面展示所需的数据包装成PageBean</p>
  * @author 刘增刚
  * @date 2016年8月20日上午10:45:14
  */
@@ -13,7 +13,7 @@ public class PageBean<T> {
 	private int tr;// 总记录数
 	private int ps;// 每页记录数
 	private String url;// 请求路径和参数
-	private List<T> beanList;
+	private List<T> beanList;//所有书的列表
 
 	// 计算总页数
 	public int getTp() {

@@ -151,7 +151,8 @@ public class BookDao {
 		pb.setBeanList(beanList);
 		pb.setTr(tr);
 
-		System.out.println(whereSql);
+		System.out.println(sql);
+		System.out.println(beanList.get(0).getAuthor());
 		return pb;
 
 	}

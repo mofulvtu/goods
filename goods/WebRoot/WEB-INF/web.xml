@@ -32,4 +32,12 @@
     <servlet-name>CategoryServlet</servlet-name>
     <url-pattern>/CategoryServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>BookServlet</servlet-name>
+    <servlet-class>com.lzg.goods.book.web.servlet.BookServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BookServlet</servlet-name>
+    <url-pattern>/BookServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

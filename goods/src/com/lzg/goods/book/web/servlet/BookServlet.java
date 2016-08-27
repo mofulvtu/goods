@@ -73,7 +73,12 @@ public class BookServlet extends BaseServlet {
 		/*
 		 * 4.使用pc和cid调用service#findByCategory得到PageBean
 		 */
+		System.out.println(pc+"======"+cid);
+		
 		PageBean<Book> pb = bookService.findByCategory(cid, pc);
+		
+		System.out.println(pb);
+		
 		/*
 		 * 5.给PageBean设置url，保存PageBean，转发到/jsps/book/list.jsp
 		 */
