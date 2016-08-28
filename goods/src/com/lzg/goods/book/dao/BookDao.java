@@ -3,14 +3,18 @@ package com.lzg.goods.book.dao;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import cn.itcast.commons.CommonUtils;
 import cn.itcast.jdbc.TxQueryRunner;
 
 import com.lzg.goods.book.domain.Book;
+import com.lzg.goods.category.domain.Category;
 import com.lzg.goods.paper.Expression;
 import com.lzg.goods.paper.PageBean;
 import com.lzg.goods.paper.PageConstants;
@@ -24,6 +28,25 @@ import com.lzg.goods.paper.PageConstants;
 public class BookDao {
 
 	QueryRunner queryRunner = new TxQueryRunner();
+
+	/**
+	 * 按id查询
+	 * @param bid
+	 * @return
+	 * @throws SQLException
+	 */
+	public Book findByBid(String bid) throws SQLException{
+		String sql = "select * from t_book where bid = ?";
+		//一行记录中包含了很多的book属性，还有一个cid属性
+		Map<String, Object> map = queryRunner.query(sql, new MapHandler(), bid);
+		//把map中除了cid以外的属性映射到Book对象中
+		Book book = CommonUtils.toBean(map, Book.class);
+		//把map中的cid属性映射到Category中，即这个Category只有cid
+		Category category = CommonUtils.toBean(map, Category.class);
+		//两者建立关系
+		book.setCategory(category);
+		return book;
+	}
 
 	/**
 	 * 按分类查询
@@ -48,10 +71,10 @@ public class BookDao {
 	 */
 	public PageBean<Book> findByBname(String bname, int pc) throws SQLException {
 		List<Expression> exprList = new ArrayList<Expression>();
-		exprList.add(new Expression("cname", "like", "%" + bname + "%"));
+		exprList.add(new Expression("bname", "like", "%" + bname + "%"));
 		return findByCriteria(exprList, pc);
 	}
-	
+
 	/**
 	 * 按作者查询
 	 * @param author
@@ -59,12 +82,13 @@ public class BookDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	public PageBean<Book> findByAuthor(String author, int pc) throws SQLException {
+	public PageBean<Book> findByAuthor(String author, int pc)
+			throws SQLException {
 		List<Expression> exprList = new ArrayList<Expression>();
 		exprList.add(new Expression("author", "like", "%" + author + "%"));
 		return findByCriteria(exprList, pc);
 	}
-	
+
 	/**
 	 * 按出版社查询
 	 * @param press
@@ -77,12 +101,16 @@ public class BookDao {
 		exprList.add(new Expression("press", "like", "%" + press + "%"));
 		return findByCriteria(exprList, pc);
 	}
-	
-	public PageBean<Book> findByCombinastion(Book criteria, int pc) throws SQLException {
+
+	public PageBean<Book> findByCombinastion(Book criteria, int pc)
+			throws SQLException {
 		List<Expression> exprList = new ArrayList<Expression>();
-		exprList.add(new Expression("bname", "like", "%" + criteria.getBname() + "%"));
-		exprList.add(new Expression("author", "like", "%" + criteria.getAuthor() + "%"));
-		exprList.add(new Expression("press", "like", "%" + criteria.getPress() + "%"));
+		exprList.add(new Expression("bname", "like", "%" + criteria.getBname()
+				+ "%"));
+		exprList.add(new Expression("author", "like", "%"
+				+ criteria.getAuthor() + "%"));
+		exprList.add(new Expression("press", "like", "%" + criteria.getPress()
+				+ "%"));
 		return findByCriteria(exprList, pc);
 	}
 
@@ -152,7 +180,6 @@ public class BookDao {
 		pb.setTr(tr);
 
 		System.out.println(sql);
-		System.out.println(beanList.get(0).getAuthor());
 		return pb;
 
 	}

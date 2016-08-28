@@ -29,7 +29,7 @@
 			</c:otherwise>
 		</c:choose>
 		
-		<%-- 需要计算页码列表的开始和结束位置，即两个变量begin和end
+ <%-- 需要计算页码列表的开始和结束位置，即两个变量begin和end
      1.总页数不足6页-->begin=1 end=最大页
      2.通过公式设置begin和end：begin=当前页-2，end=当前页+3
      3.如果begin<1,那么让begin=1,end=6

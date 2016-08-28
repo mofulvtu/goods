@@ -15,7 +15,8 @@ public class Book {
 	private int pageNum;// 页数
 	private int wordNum;// 字数
 	private String printtime;// 刷新时间
-	private int booksize;// 纸质
+	private int booksize;// 开数
+	private String paper;// 纸质
 	private Category category;// 所属分类
 	private String image_w;// 大图路径
 	private String image_b;// 小图路径
@@ -122,6 +123,14 @@ public class Book {
 
 	public void setBooksize(int booksize) {
 		this.booksize = booksize;
+	}
+
+	public String getPaper() {
+		return paper;
+	}
+
+	public void setPaper(String paper) {
+		this.paper = paper;
 	}
 
 	public Category getCategory() {
