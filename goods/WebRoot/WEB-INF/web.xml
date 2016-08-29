@@ -44,4 +44,12 @@
     <servlet-name>BookServlet</servlet-name>
     <url-pattern>/BookServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>CartItemServlet</servlet-name>
+    <servlet-class>com.lzg.goods.cart.web.servlet.CartItemServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CartItemServlet</servlet-name>
+    <url-pattern>/CartItemServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

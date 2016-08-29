@@ -312,8 +312,8 @@ public class UserServlet extends BaseServlet{
 		String loginname = formUser.getLoginname();
 		if(loginname == null || loginname.trim().isEmpty()){
 			errors.put("loginname", "用户名不能为空！");
-		}else if(loginname.length() < 3 || loginname.length() > 20){
-			errors.put("loginname", "用户名长度必须在3-20之间！");
+		}else if(loginname.length() < 2 || loginname.length() > 20){
+			errors.put("loginname", "用户名长度必须在2-20之间！");
 		}else if(userService.ajaxValidateLoginname(loginname)){
 			errors.put("loginname", "用户名不存在！");
 		}
