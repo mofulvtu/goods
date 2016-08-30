@@ -28,6 +28,70 @@ public class CartItemServlet extends BaseServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	private CartItemService cartItemService = new CartItemService();
+	
+	/**
+	 * 加载需要结算的购物车条目
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String loadCartItems(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		/*
+		 * 1.获取cartItemIds参数
+		 * 2.调用service得到List<CartItem>
+		 * 3.保存转发到/cart/showitem.jsp
+		 */
+		String cartItemIds = req.getParameter("cartItemIds");
+		List<CartItem> cartItemList = cartItemService.loadCartItems(cartItemIds);
+		req.setAttribute("cartItemList", cartItemList);
+		return "f:/jsps/cart/showitem.jsp";
+	}
+	
+	/**
+	 * 更新购物车条目数量
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String updateQuantity(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+	    /*
+	     * 1.获取cartItemId参数
+	     * 2.调用service完成修改
+	     * 3.返回list.jsp,调用本类的myCart()方法
+	     */
+		String cartItemId = req.getParameter("cartItemId");
+		System.out.println(cartItemId);
+		int quantity = Integer.parseInt(req.getParameter("quantity"));
+		System.out.println(quantity);
+		cartItemService.updateQuantity(cartItemId, quantity);
+		return myCart(req, resp);
+	}
+	
+	/**
+	 * 删除或者批量删除购物车条目
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public String batchDelete(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+	    /*
+	     * 1.获取cartItemIds参数
+	     * 2.调用service完成删除
+	     * 3.返回list.jsp,调用本类的myCart()方法
+	     */
+		String cartItemIds = req.getParameter("cartItemIds");
+		cartItemService.batchDelete(cartItemIds);
+		return myCart(req, resp);
+	}
 
 	/**
 	 * 查看购物车
@@ -43,6 +107,7 @@ public class CartItemServlet extends BaseServlet {
 		 * 1.得到uid
 		 */
 		User user = (User) req.getSession().getAttribute("sessionUser");
+		
 		String uid = user.getUid();
 		/*
 		 * 2.通过service得到当前用户的购物车条目
@@ -56,11 +121,20 @@ public class CartItemServlet extends BaseServlet {
 		return "f:/jsps/cart/list.jsp";
 	}
 
+	/**
+	 * 添加购物车条目
+	 * @param req
+	 * @param resp
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public String add(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		/*
 		 * 1.封装表单数据到CartItem(bid,quantity)
 		 */
+		@SuppressWarnings("rawtypes")
 		Map map = req.getParameterMap();
 		CartItem cartItem = CommonUtils.toBean(map, CartItem.class);
 		Book book = CommonUtils.toBean(map, Book.class);

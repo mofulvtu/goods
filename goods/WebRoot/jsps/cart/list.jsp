@@ -86,7 +86,7 @@
 		 total += Number(text);
 	 });
 		 //5.把总计显示在总计元素上
-		 $("#total").text(total);
+		 $("#total").text(round(total,2));//round()把小数保留两位
 }
 
 /*
@@ -110,23 +110,78 @@
 	}
 }
 
- 
- 
+/*
+ * 批量删除
+ */
+ function batchDelete(){
+	/*1.获取所有被选中条目的复选框
+	 *2.创建一个数组，把所有被选中的复选框的值添加到数组中
+	 *3.指定location为cartItemServlet，参数method=batchDelete，参数cartItemIds等于数组的toString().
+	 */
+	var cartItemIdArray = new Array();
+	$(":checkbox[name=checkboxBtn][checked=true]").each(function(){
+		var id = $(this).val();
+		cartItemIdArray.push(id);
+	});
+	location = "/goods/CartItemServlet?method=batchDelete&cartItemIds="+ cartItemIdArray;
+	
+}
+
+/*
+ * 加号减号修改数量
+ */
+	function changeBuyQuantity(obj,id) {
+	    var _id = id + "Quantity";
+	    var byStr = document.getElementById(_id);
+		var byNum = parseInt(byStr.value);
+		
+		if (byNum <= 1 && obj == 0) {//参数为0并且数量为1则不能再减
+			byStr.value = 1;
+		} else {
+			if (obj == 0)
+				byStr.value = byNum-1;
+			else
+				byStr.value = byNum+1;
+		}
+		
+		//请求服务器处理
+		location.href = "/goods/CartItemServlet?method=updateQuantity&cartItemId="+id
+		+"&quantity="+byStr.value;
+	}
+
+		/*
+		 * 结算加载
+		 */
+		 function jieSuan(){
+			/*1.获取所有被选中条目的复选框
+			 *2.创建一个数组，把所有被选中的复选框的值添加到数组中
+			 *3.指定location为cartItemServlet，参数method=batchDelete，参数cartItemIds等于数组的toString().
+			 */
+			var cartItemIdArray = new Array();
+			$(":checkbox[name=checkboxBtn][checked=true]").each(function(){
+				var id = $(this).val();
+				cartItemIdArray.push(id);
+			});
+			location = "/goods/CartItemServlet?method=loadCartItems&cartItemIds="+ cartItemIdArray;
+			
+		}
 </script>
 </head>
 <body>
 
-	<table width="95%" align="center" cellpadding="0" cellspacing="0">
-		<tr>
-			<td align="right"><img align="top"
-				src="<c:url value='/images/icon_empty.png'/>" /></td>
-			<td><span class="spanEmpty">您的购物车中暂时没有商品</span></td>
-		</tr>
-	</table>
-
-	<br />
-	<br />
-
+ <c:choose>
+    <c:when test="${empty cartItemList }">
+		<table width="95%" align="center" cellpadding="0" cellspacing="0">
+			<tr>
+				<td align="right"><img align="top"
+					src="<c:url value='/images/icon_empty.png'/>" /></td>
+				<td><span class="spanEmpty">您的购物车中暂时没有商品</span></td>
+			</tr>
+		</table>
+    
+    </c:when>
+    <c:otherwise>
+   
 
 	<table width="95%" align="center" cellpadding="0" cellspacing="0">
 		<tr align="center" bgcolor="#efeae5">
@@ -147,13 +202,13 @@
 			  <input value="${cartItem.cartItemId }" type="checkbox" name="checkboxBtn" checked="checked" />
 			</td>
 			<td align="left" width="70px">
-			  <a class="linkImage" href="<c:url value='/jsps/book/desc.jsp'/>">
+			  <a class="linkImage" href="<c:url value='/BookServlet?method=load&bid=${cartItem.book.bid }'/>">
 			    <img border="0" width="54" align="top"
 					src="<c:url value='/${cartItem.book.image_b }'/>" />
 			  </a>
 			</td>
 			<td align="left" width="400px">
-			  <a href="<c:url value='/jsps/book/desc.jsp'/>">
+			  <a href="<c:url value='/BookServlet?method=load&bid=${cartItem.book.bid }'/>">
 				<span>${cartItem.book.bname }</span>
 			  </a>
 			</td>
@@ -162,16 +217,16 @@
 				</span>
 			</td>
 			<td>
-			  <a class="jian" id="${cartItem.cartItemId }Jian"></a>
+			  <a href="javascript:void(0);" class="jian" id="${cartItem.cartItemId }Jian" onclick="changeBuyQuantity(0,'${cartItem.cartItemId }')"></a>
 			  <input class="quantity"
 				readonly="readonly" id="${cartItem.cartItemId }Quantity" type="text" value="${cartItem.quantity }" />
-				<a class="jia" id="${cartItem.cartItemId }Jia"></a></td>
+				<a href="javascript:void(0);" class="jia" id="${cartItem.cartItemId }Jia" onclick="changeBuyQuantity(1,'${cartItem.cartItemId }')"></a></td>
 			<td width="100px">
 			  <span class="price_n">&yen;
 			  <span	class="subTotal" id="${cartItem.cartItemId }Subtotal">${cartItem.subtotal }</span></span>
 			</td>
 			<td>
-			  <a href="<c:url value='/jsps/cart/list.jsp'/>">删除</a>
+			  <a href="<c:url value='/CartItemServlet?method=batchDelete&cartItemIds=${cartItem.cartItemId }'/>">删除</a>
 			</td>
 		</tr>
       </c:forEach>
@@ -179,13 +234,13 @@
 
 		<tr>
 			<td colspan="4" class="tdBatchDelete"><a
-				href="javascript:alert('批量删除成功');">批量删除</a></td>
+				href="javascript:batchDelete();">批量删除</a></td>
 			<td colspan="3" align="right" class="tdTotal"><span>总计：</span><span
 				class="price_t">&yen;<span id="total"></span></span></td>
 		</tr>
 		<tr>
 			<td colspan="7" align="right"><a
-				href="<c:url value='/jsps/cart/showitem.jsp'/>" id="jiesuan"
+				onclick="jieSuan()" id="jiesuan"
 				class="jiesuan"></a></td>
 		</tr>
 	</table>
@@ -194,6 +249,9 @@
 		<input type="hidden" name="cartItemIds" id="cartItemIds" /> <input
 			type="hidden" name="method" value="loadCartItems" />
 	</form>
+ 
+    </c:otherwise>
+ </c:choose>
 
 
 </body>
