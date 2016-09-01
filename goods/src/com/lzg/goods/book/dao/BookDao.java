@@ -102,6 +102,13 @@ public class BookDao {
 		return findByCriteria(exprList, pc);
 	}
 
+	/**
+	 * 复杂查询
+	 * @param criteria
+	 * @param pc
+	 * @return
+	 * @throws SQLException
+	 */
 	public PageBean<Book> findByCombinastion(Book criteria, int pc)
 			throws SQLException {
 		List<Expression> exprList = new ArrayList<Expression>();
@@ -137,8 +144,11 @@ public class BookDao {
 		List<Object> params = new ArrayList<Object>();// SQL中有问号，对应问号值
 		for (Expression expr : exprList) {
 			/*
-			 * 添加一个条件上 1)以and开头 2)条件的名称 3)条件的运算符，可以是=、!=、>、< ...is null, is null
-			 * 没有值 4)如果条件不是is null，再追加问号，然后再向params中添加与问号对应的值
+			 * 添加一个条件上 
+			 * 1)以and开头 
+			 * 2)条件的名称 
+			 * 3)条件的运算符，可以是=、!=、>、< ...is null, is null没有值
+			 * 4)如果条件不是is null，再追加问号，然后再向params中添加与问号对应的值
 			 */
 			whereSql.append(" and ").append(expr.getName()).append(" ")
 					.append(expr.getOperator()).append(" ");
@@ -161,7 +171,7 @@ public class BookDao {
 		 */
 		sql = "select * from t_book" + whereSql
 				+ " order by orderBy limit ? ,?";
-		params.add((pc - 1) * ps);// 第一个问号 计算当前页首航记录的下标
+		params.add((pc - 1) * ps);// 第一个问号 计算当前页首行记录的下标
 		params.add(ps);// 一共查询几行，就是每页记录数
 
 		List<Book> beanList = queryRunner.query(sql, new BeanListHandler<>(

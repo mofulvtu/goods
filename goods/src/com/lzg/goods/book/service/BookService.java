@@ -8,7 +8,7 @@ import com.lzg.goods.paper.PageBean;
 
 /**
  * <p>Title:BookService</p>
- * <p>Description:</p>
+ * <p>Description:Book业务层</p>
  * @author 刘增刚
  * @date 2016年8月20日下午4:32:37
  */
