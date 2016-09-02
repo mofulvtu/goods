@@ -19,6 +19,44 @@ public class OrderService {
 	private OrderDao orderDao = new OrderDao();
 
 	/**
+	 * 通过订单id加载订单
+	 * @param oid
+	 * @return
+	 */
+	public Order load(String oid){
+		try {
+			JdbcUtils.beginTransaction();
+			Order order = orderDao.load(oid);
+			JdbcUtils.commitTransaction();
+			return order;
+		} catch (SQLException e) {
+			try {
+				JdbcUtils.rollbackTransaction();
+			} catch (SQLException e1) {
+			}
+			throw new RuntimeException(e);
+		}
+	}
+	
+	/**
+	 * 生成订单
+	 * @param order
+	 */
+	public void createOrder(Order order){
+		try {
+			JdbcUtils.beginTransaction();
+			orderDao.add(order);
+			JdbcUtils.commitTransaction();
+		} catch (SQLException e) {
+			try {
+				JdbcUtils.rollbackTransaction();
+			} catch (SQLException e1) {
+			}
+			throw new RuntimeException(e);
+		}
+	}
+	
+	/**
 	 * 通过用户查询订单
 	 * @param uid
 	 * @param pc

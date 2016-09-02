@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -28,6 +29,51 @@ import com.lzg.goods.paper.PageConstants;
  */
 public class OrderDao {
 	private QueryRunner queryRunner = new TxQueryRunner();
+
+	/**
+	 * 通过订单id加载订单信息
+	 * @param oid
+	 * @return
+	 * @throws SQLException
+	 */
+	public Order load(String oid) throws SQLException {
+		String sql = "select * from t_order where oid = ?";
+		Order order = queryRunner.query(sql,
+				new BeanHandler<Order>(Order.class), oid);
+		loadOrderItem(order);//加载订单条目
+		return order;
+	}
+
+	/**
+	 * 生成订单
+	 * @param order
+	 * @throws SQLException 
+	 */
+	public void add(Order order) throws SQLException {
+		/*
+		 * 1.插入订单
+		 */
+		String sql = "insert into t_order values(?,?,?,?,?,?)";
+		Object[] params = { order.getOid(), order.getOrdertime(),
+				order.getTotal(), order.getStatus(), order.getAddress(),
+				order.getOwner().getUid() };
+		queryRunner.update(sql, params);
+		/*
+		 * 2.循环遍历订单的所有条目，让每个条目生成一个Object[] 多个条目就对应Object[][] 执行批处理
+		 */
+		sql = "insert into t_orderitem values(?,?,?,?,?,?,?,?)";
+		int len = order.getOrderItemList().size();
+		Object[][] objs = new Object[len][];
+		for (int i = 0; i < len; i++) {
+			OrderItem item = order.getOrderItemList().get(i);
+			System.out.println(item.getBook().getAuthor());
+			objs[i] = new Object[] { item.getOrderItemId(), item.getQuantity(),
+					item.getSubtotal(), item.getBook().getBid(),
+					item.getBook().getBname(), item.getBook().getCurrPrice(),
+					item.getBook().getImage_b(), item.getOrder().getOid() };
+		}
+		queryRunner.batch(sql, objs);
+	}
 
 	/**
 	 * 按用户查询订单
@@ -121,9 +167,7 @@ public class OrderDao {
 	 */
 	private void loadOrderItem(Order order) throws SQLException {
 		/*
-		 * 1.sql语句 
-		 * 2.执行得到List<OrderItem> 
-		 * 3.设置给Order对象
+		 * 1.sql语句 2.执行得到List<OrderItem> 3.设置给Order对象
 		 */
 		String sql = "select * from t_orderItem where oid = ?";
 		List<Map<String, Object>> mapList = queryRunner.query(sql,
@@ -158,6 +202,5 @@ public class OrderDao {
 		orderItem.setBook(book);
 		return orderItem;
 	}
-	
 
 }

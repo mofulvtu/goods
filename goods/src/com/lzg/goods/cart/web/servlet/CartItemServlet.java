@@ -47,6 +47,7 @@ public class CartItemServlet extends BaseServlet {
 		String cartItemIds = req.getParameter("cartItemIds");
 		List<CartItem> cartItemList = cartItemService.loadCartItems(cartItemIds);
 		req.setAttribute("cartItemList", cartItemList);
+		req.setAttribute("cartItemIds", cartItemIds);//保存为了后面订单模块使用
 		return "f:/jsps/cart/showitem.jsp";
 	}
 	
